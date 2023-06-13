@@ -42,12 +42,13 @@ public class LockedMeApp {
             System.out.println("An error occurred while creating the file.");
         }
 
+        System.out.println();
         displayFileOperationsMenu();
     }
 
     public static void deleteFile() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the file name to delete: ");
+        System.out.println("Enter the file name to delete [please enter the extension of the file as well]: ");
         String fileName = scanner.nextLine();
 
         File file = new File(ROOT_DIRECTORY + File.separator + fileName);
@@ -63,18 +64,20 @@ public class LockedMeApp {
             System.out.println("File not found.");
         }
 
+        System.out.println();
         displayFileOperationsMenu();
     }
 
     public static void searchFile() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the file name to search: ");
+        System.out.println("Enter the file name to search [please enter the extension of the file as well]: ");
         String fileName = scanner.nextLine();
 
         File directory = new File(ROOT_DIRECTORY);
         File[] files = directory.listFiles();
 
         boolean fileFound = false;
+        assert files != null;
         for (File file : files) {
             if (file.getName().equalsIgnoreCase(fileName)) {
                 fileFound = true;
@@ -86,6 +89,7 @@ public class LockedMeApp {
             System.out.println("File not found.");
         }
 
+        System.out.println();
         displayFileOperationsMenu();
     }
 
@@ -108,7 +112,7 @@ public class LockedMeApp {
     }
 
     public static void displayOptions() {
-        System.out.println("Please select an option:");
+        System.out.println("Please select an option [Valid Options : 1 2 3]:");
         System.out.println("1. View current file names in ascending order");
         System.out.println("2. File operations");
         System.out.println("3. Close the application");
