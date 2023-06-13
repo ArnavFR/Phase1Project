@@ -24,6 +24,71 @@ public class LockedMeApp {
         displayOptions();
     }
 
+    public static void addFile() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the file name to add [please enter the extension of the file as well]: ");
+        String fileName = scanner.nextLine();
+
+        File file = new File(ROOT_DIRECTORY + File.separator + fileName);
+
+        try {
+            boolean created = file.createNewFile();
+            if (created) {
+                System.out.println("File created successfully.");
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while creating the file.");
+        }
+
+        displayFileOperationsMenu();
+    }
+
+    public static void deleteFile() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the file name to delete: ");
+        String fileName = scanner.nextLine();
+
+        File file = new File(ROOT_DIRECTORY + File.separator + fileName);
+
+        if (file.exists()) {
+            boolean deleted = file.delete();
+            if (deleted) {
+                System.out.println("File deleted successfully.");
+            } else {
+                System.out.println("Unable to delete the file.");
+            }
+        } else {
+            System.out.println("File not found.");
+        }
+
+        displayFileOperationsMenu();
+    }
+
+    public static void searchFile() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the file name to search: ");
+        String fileName = scanner.nextLine();
+
+        File directory = new File(ROOT_DIRECTORY);
+        File[] files = directory.listFiles();
+
+        boolean fileFound = false;
+        for (File file : files) {
+            if (file.getName().equalsIgnoreCase(fileName)) {
+                fileFound = true;
+                System.out.println("File found: " + file.getAbsolutePath());
+                break;
+            }
+        }
+        if (!fileFound) {
+            System.out.println("File not found.");
+        }
+
+        displayFileOperationsMenu();
+    }
+
     public static void handleUserInput() {
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
@@ -56,9 +121,9 @@ public class LockedMeApp {
         scanner.nextLine();
 
         switch (option) {
-            case 1 -> System.out.println("addFile()");
-            case 2 -> System.out.println("deleteFile()");
-            case 3 -> System.out.println("searchFile()");
+            case 1 -> addFile();
+            case 2 -> deleteFile();
+            case 3 -> searchFile();
             case 4 -> displayOptions();
             default -> {
                 System.out.println("Invalid option. Please try again.");
