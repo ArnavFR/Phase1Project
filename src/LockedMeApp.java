@@ -45,25 +45,31 @@ public class LockedMeApp {
         System.out.println();
         displayFileOperationsMenu();
     }
-
     public static void deleteFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the file name to delete [please enter the extension of the file as well]: ");
         String fileName = scanner.nextLine();
 
-        File file = new File(ROOT_DIRECTORY + File.separator + fileName);
+        File directory = new File(ROOT_DIRECTORY);
+        File[] files = directory.listFiles();
 
-        if (file.exists()) {
-            boolean deleted = file.delete();
-            if (deleted) {
-                System.out.println("File deleted successfully.");
-            } else {
-                System.out.println("Unable to delete the file.");
+        boolean fileFound = false;
+        assert files != null;
+        for (File file : files) {
+            if (file.getName().equals(fileName)) {
+                fileFound = true;
+                boolean deleted = file.delete();
+                if (deleted) {
+                    System.out.println("File deleted successfully.");
+                } else {
+                    System.out.println("Unable to delete the file.");
+                }
+                break;
             }
-        } else {
+        }
+        if (!fileFound) {
             System.out.println("File not found.");
         }
-
         System.out.println();
         displayFileOperationsMenu();
     }
